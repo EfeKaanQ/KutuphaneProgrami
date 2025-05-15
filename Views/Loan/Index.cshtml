@@ -1,0 +1,79 @@
+@model IEnumerable<KutuphaneProgrami.Models.Loan>
+@{
+    ViewBag.Title = "Ödünç İşlemleri";
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:1000px; margin:0 auto;">
+    <h2 style="color:#3a6073;"><i class="fas fa-hand-holding" style="color:#f39c12; margin-right:0.5rem;"></i>Ödünç İşlemleri</h2>
+    <div style="float:right; margin-bottom:1rem;">
+        <a href="/Loan/Create" style="background:#74ebd5; color:#fff; padding:0.5rem 1rem; border-radius:6px; text-decoration:none; margin-right:1rem; display:inline-flex; align-items:center;">
+            <i class="fas fa-plus" style="margin-right:0.3rem;"></i>Ödünç Ver
+        </a>
+    </div>
+    @if(TempData["Error"] != null)
+    {
+        <div style="color:#e74c3c; margin-bottom:1rem;"><i class="fas fa-exclamation-circle" style="margin-right:0.3rem;"></i>@TempData["Error"]</div>
+    }
+    <table style="width:100%; margin-top:2rem;border-collapse: collapse">
+        <tr style="background:#f4f6fb; color:#3a6073;">
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Kitap</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Öğrenci</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Alış Tarihi</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Son İade Tarihi</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">İade Tarihi</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">İşlem</th>
+        </tr>
+        @foreach(var l in Model)
+        {
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>@l.Book?.Title
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>@l.Student?.Name @l.Student?.Surname
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-calendar-plus" style="color:#3498db; margin-right:0.5rem;"></i>@l.LoanDate.ToString("dd.MM.yyyy")
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-calendar-check" style="color:#3498db; margin-right:0.5rem;"></i>@l.DueDate.ToString("dd.MM.yyyy")
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-calendar-times" style="color:#3498db; margin-right:0.5rem;"></i>@(l.ReturnDate.HasValue ? l.ReturnDate.Value.ToString("dd.MM.yyyy") : "-")
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    @if(!l.ReturnDate.HasValue)
+                    {
+                        <a href="/Loan/Return/@l.Id" style="background:#e67e22; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+                            <i class="fas fa-undo" style="margin-right:0.3rem;"></i>İade Al
+                        </a>
+                    }
+                    <a href="/Loan/Edit/@l.Id" style="background:#f39c12; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; margin-left:0.5rem;">
+                        <i class="fas fa-edit" style="margin-right:0.3rem;"></i>Güncelle
+                    </a>
+                    <a href="/Loan/Delete/@l.Id" onclick="return confirm('Bu ödünç kaydını silmek istediğinizden emin misiniz?')" style="background:#e74c3c; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; margin-left:0.5rem;">
+                        <i class="fas fa-trash" style="margin-right:0.3rem;"></i>Sil
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<style>
+    @@media print {
+        body * {
+            visibility: hidden;
+        }
+        .container, .container * {
+            visibility: visible;
+        }
+        .container {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        button, a {
+            display: none !important;
+        }
+    }
+</style> 

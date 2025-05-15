@@ -1,0 +1,105 @@
+@{
+    ViewBag.Title = "Kayıt Ol";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kayıt Ol</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .register-container {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            min-width: 340px;
+            max-width: 90vw;
+        }
+        .register-container h2 {
+            text-align: center;
+            color: #3a6073;
+            margin-bottom: 1.5rem;
+        }
+        .register-container label {
+            color: #3a6073;
+            font-weight: 500;
+        }
+        .register-container input {
+            width: 100%;
+            padding: 0.6rem;
+            margin: 0.3rem 0 1rem 0;
+            border: 1px solid #b2bec3;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        .register-container input:focus {
+            border: 1.5px solid #74ebd5;
+            outline: none;
+        }
+        .register-container button {
+            width: 100%;
+            background: linear-gradient(90deg, #74ebd5 0%, #3a6073 100%);
+            color: #fff;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+        .register-container button:hover {
+            background: linear-gradient(90deg, #3a6073 0%, #74ebd5 100%);
+        }
+        .register-container .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #3a6073;
+            text-decoration: none;
+            font-size: 0.98rem;
+        }
+        .register-container .login-link:hover {
+            text-decoration: underline;
+        }
+        .register-container .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Kayıt Ol</h2>
+        @if (ViewBag.Error != null)
+        {
+            <div class="error">@ViewBag.Error</div>
+        }
+        <form asp-action="Register" method="post">
+            <label>Ad:</label>
+            <input type="text" name="name" required />
+            <label>Soyad:</label>
+            <input type="text" name="surname" required />
+            <label>Email:</label>
+            <input type="email" name="email" required />
+            <label>Şifre:</label>
+            <input type="password" name="password" required />
+            <button type="submit">Kayıt Ol</button>
+        </form>
+        <a class="login-link" href="/Account/Login">Zaten hesabın var mı? Giriş Yap</a>
+    </div>
+</body>
+</html> 

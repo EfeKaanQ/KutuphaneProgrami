@@ -1,0 +1,2 @@
+// Add Font Awesome library to the project for icon support.
+// This can be done by downloading the library and placing it in the wwwroot/lib directory, or by using a CDN link in the _Layout.cshtml file. 

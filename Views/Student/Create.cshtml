@@ -1,0 +1,35 @@
+@model KutuphaneProgrami.Models.Student
+@{
+    ViewBag.Title = "Öğrenci Ekle";
+    var classes = ViewBag.Classes as List<KutuphaneProgrami.Models.Class>;
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:500px; margin:0 auto;">
+    <h2 style="color:#3a6073;">Öğrenci Ekle</h2>
+    @Html.ValidationSummary(true, "", new { @style = "color:#e74c3c; margin-bottom:1rem;" })
+    @if (ViewBag.Errors != null)
+    {
+        <ul style="color:#e74c3c;">
+        @foreach (var err in ViewBag.Errors)
+        {
+            <li>@err</li>
+        }
+        </ul>
+    }
+    <form asp-action="Create" method="post">
+        <label>Ad:</label>
+        <input asp-for="Name" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <label>Soyad:</label>
+        <input asp-for="Surname" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <label>Numara:</label>
+        <input asp-for="Number" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <label>Sınıf:</label>
+        <select asp-for="ClassId" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;">
+            <option value="0">Seçiniz</option>
+            @foreach(var c in classes)
+            {
+                <option value="@c.Id">@c.Name</option>
+            }
+        </select>
+        <button type="submit" style="background:#74ebd5; color:#fff; padding:0.5rem 1.2rem; border:none; border-radius:6px; font-size:1rem;">Kaydet</button>
+    </form>
+</div> 

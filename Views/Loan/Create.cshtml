@@ -1,0 +1,47 @@
+@{
+    ViewBag.Title = "Ödünç Ver";
+    var books = ViewBag.Books as List<KutuphaneProgrami.Models.Book>;
+    var students = ViewBag.Students as List<KutuphaneProgrami.Models.Student>;
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:500px; margin:0 auto;">
+    <h2 style="color:#3a6073;">Ödünç Ver</h2>
+    @if(ViewBag.Error != null)
+    {
+        <div style="color:#e74c3c; margin-bottom:1rem;">@ViewBag.Error</div>
+    }
+    <form asp-action="Create" method="post">
+        <label>Kitap:</label>
+       <select name="BookId" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;">
+    <option value="">Seçiniz</option>
+    @foreach(var b in books)
+    {
+        if (b.Id == (int?)ViewBag.SelectedBookId)
+        {
+            @:<option value="@b.Id" selected>@b.Title</option>
+        }
+        else
+        {
+            @:<option value="@b.Id">@b.Title</option>
+        }
+    }
+</select>
+
+<select name="StudentId" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;">
+    <option value="">Seçiniz</option>
+    @foreach(var s in students)
+    {
+        if (s.Id == (int?)ViewBag.SelectedStudentId)
+        {
+            @:<option value="@s.Id" selected>@s.Name @s.Surname</option>
+        }
+        else
+        {
+            @:<option value="@s.Id">@s.Name @s.Surname</option>
+        }
+    }
+</select>
+        <label>Son İade Tarihi:</label>
+        <input type="date" name="DueDate" required style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+        <button type="submit" style="background:#74ebd5; color:#fff; padding:0.5rem 1.2rem; border:none; border-radius:6px; font-size:1rem;">Ödünç Ver</button>
+    </form>
+</div> 

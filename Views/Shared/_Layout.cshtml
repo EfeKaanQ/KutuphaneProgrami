@@ -1,0 +1,203 @@
+﻿@{
+    // Hoşgeldiniz yazısı sadece ortada olacak, sol menüde olmayacak
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6fb;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            width: 250px;
+            background: linear-gradient(180deg, #2c3e50 0%, #3498db 100%);
+            color: #fff;
+            padding: 2rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .sidebar:hover {
+            width: 260px;
+        }
+        .sidebar h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        .sidebar .menu {
+            flex: 0 0 auto;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .sidebar a i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .sidebar a:hover i {
+            transform: scale(1.1);
+        }
+        .sidebar a.active {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .sidebar a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #fff;
+            border-radius: 0 4px 4px 0;
+        }
+        .sidebar .logout {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: #fff;
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: 2.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        .sidebar .logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s ease;
+        }
+        .welcome {
+            font-size: 1.2rem;
+            color: #3a6073;
+            margin-bottom: 2rem;
+        }
+        /* Aktif menü öğesi için stil */
+        .sidebar a[href="@Context.Request.Path"] {
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .sidebar a[href="@Context.Request.Path"]::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #fff;
+            border-radius: 0 4px 4px 0;
+        }
+        /* Modern Table Styles */
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .modern-table th, .modern-table td {
+            background: #fff;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            font-size: 1.05rem;
+            color: #2c3e50;
+            vertical-align: middle;
+        }
+        .modern-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.08rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .modern-table tr {
+            transition: background 0.2s;
+        }
+        .modern-table tbody tr:hover td {
+            background: #f1f5f9;
+        }
+        .modern-table td .btn, .modern-table td button {
+            border-radius: 6px !important;
+            background: #f7fafc;
+            color: #2c3e50;
+            font-size: 1rem;
+            padding: 0.35rem 0.8rem;
+            margin: 0 0.1rem;
+            border: 1px solid #e5e7eb;
+            transition: background 0.2s, color 0.2s;
+        }
+        .modern-table td .btn:hover, .modern-table td button:hover {
+            background: #e5e7eb;
+            color: #222;
+        }
+        @@media (max-width: 700px) {
+            .modern-table th, .modern-table td {
+                padding: 0.7rem 0.5rem;
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2><i class="fas fa-book-open" style="margin-right: 0.5rem;"></i>Kütüphane</h2>
+        <div class="menu">
+            <a href="/Home/Index"><i class="fa-solid fa-house"></i> Anasayfa</a>
+            <a href="/Book/Index"><i class="fa-solid fa-book"></i> Kitaplar</a>
+            <a href="/BookType/Index"><i class="fa-solid fa-layer-group"></i> Kitap Türleri</a>
+            <a href="/Student/Index"><i class="fa-solid fa-user-graduate"></i> Öğrenciler</a>
+            <a href="/Class/Index"><i class="fa-solid fa-chalkboard"></i> Sınıflar</a>
+            <a href="/Loan/Index"><i class="fa-solid fa-arrow-right-arrow-left"></i> Ödünç İşlemleri</a>
+            <a href="/Report/Index"><i class="fa-solid fa-chart-bar"></i> Raporlar</a>
+        </div>
+        <a class="logout" href="/Account/Logout"><i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap</a>
+    </div>
+    <div class="main-content">
+        @RenderBody()
+    </div>
+</body>
+</html>

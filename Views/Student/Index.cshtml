@@ -1,0 +1,47 @@
+@model IEnumerable<KutuphaneProgrami.Controllers.StudentListVM>
+@{
+    ViewBag.Title = "Öğrenciler";
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:900px; margin:0 auto;">
+    <h2 style="color:#3a6073;"><i class="fas fa-user-graduate" style="color:#f39c12; margin-right:0.5rem;"></i>Öğrenciler</h2>
+    <a href="/Student/Create" style="background:#74ebd5; color:#fff; padding:0.5rem 1rem; border-radius:6px; text-decoration:none; float:right; margin-bottom:1rem; display:inline-flex; align-items:center;">
+        <i class="fas fa-plus" style="margin-right:0.3rem;"></i>Öğrenci Ekle
+    </a>
+    <table style="width:100%; margin-top:2rem;border-collapse: collapse;">
+        <tr style="background:#f4f6fb; color:#3a6073;">
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Ad</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Soyad</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Numara</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">Sınıf</th>
+            <th style="padding:0.5rem; text-align:left;border: 1px solid #ddd">İşlem</th>
+        </tr>
+        @foreach(var s in Model)
+        {
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-user" style="color:#3498db; margin-right:0.5rem;"></i>@s.Name
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">@s.Surname</td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-id-card" style="color:#3498db; margin-right:0.5rem;"></i>@s.Number
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <i class="fas fa-chalkboard" style="color:#3498db; margin-right:0.5rem;"></i>@s.ClassName
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <div style="display:flex; gap:0.5rem; align-items:center;">
+                        <a href="/Student/Edit/@s.Id" style="background:#f39c12; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+                            <i class="fas fa-edit" style="margin-right:0.3rem;"></i>Güncelle
+                        </a>
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@s.Id" />
+                            <button type="submit" onclick="return confirm('Bu öğrenciyi silmek istediğinize emin misiniz?')" style="background:#e74c3c; color:#fff; border:none; border-radius:6px; padding:0.3rem 0.8rem; cursor:pointer; display:inline-flex; align-items:center;">
+                                <i class="fas fa-trash" style="margin-right:0.3rem;"></i>Sil
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div> 

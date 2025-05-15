@@ -1,0 +1,14 @@
+@model KutuphaneProgrami.Models.Class
+@{
+    ViewBag.Title = "Sınıf Güncelle";
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:400px; margin:0 auto;">
+    <h2 style="color:#3a6073;">Sınıf Güncelle</h2>
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="UserId" />
+        <label>Sınıf Adı:</label>
+        <input asp-for="Name" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <button type="submit" style="background:#74ebd5; color:#fff; padding:0.5rem 1.2rem; border:none; border-radius:6px; font-size:1rem;">Güncelle</button>
+    </form>
+</div> 

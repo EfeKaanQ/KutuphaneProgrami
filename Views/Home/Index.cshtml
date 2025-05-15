@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Anasayfa";
+}
+<style>
+    .shortcut-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(135deg, #74ebd5 0%, #3a6073 100%);
+        color: #fff;
+        padding: 1.3rem 1.7rem;
+        border-radius: 18px;
+        text-decoration: none;
+        font-size: 1.13rem;
+        box-shadow: 0 6px 24px rgba(31,38,135,0.13), 0 1.5px 4px rgba(44,62,80,0.08);
+        min-width: 120px;
+        transition: all 0.25s cubic-bezier(.4,2,.6,1);
+        margin-bottom: 0.2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    .shortcut-btn i {
+        font-size: 2.2rem;
+        margin-bottom: 0.6rem;
+        transition: transform 0.25s cubic-bezier(.4,2,.6,1);
+        filter: drop-shadow(0 2px 6px rgba(44,62,80,0.10));
+    }
+    .shortcut-btn:hover {
+        background: linear-gradient(135deg, #3a6073 0%, #74ebd5 100%);
+        color: #fff;
+        box-shadow: 0 12px 32px rgba(31,38,135,0.18), 0 2px 8px rgba(44,62,80,0.13);
+        transform: translateY(-6px) scale(1.04);
+        z-index: 2;
+    }
+    .shortcut-btn:hover i {
+        transform: scale(1.15) rotate(-6deg);
+    }
+    .shortcut-btn:nth-child(2) { background: linear-gradient(135deg, #3a6073 0%, #74ebd5 100%); }
+    .shortcut-btn:nth-child(3) { background: linear-gradient(135deg, #6c63ff 0%, #74ebd5 100%); }
+    .shortcut-btn:nth-child(4) { background: linear-gradient(135deg, #00b894 0%, #3a6073 100%); }
+    .shortcut-btn:nth-child(5) { background: linear-gradient(135deg, #e67e22 0%, #3a6073 100%); }
+    .shortcut-btn:nth-child(6) { background: linear-gradient(135deg, #636e72 0%, #3a6073 100%); }
+
+    .welcome-box {
+        background: linear-gradient(120deg, #f7fafc 0%, #e3e9f3 100%);
+        border-radius: 22px;
+        box-shadow: 0 4px 16px rgba(44,62,80,0.06), 0 1.5px 4px rgba(31,38,135,0.04);
+        padding: 2.7rem 2.2rem 2.5rem 2.2rem;
+        max-width: 540px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .welcome-box h1 {
+        color: #2c3e50;
+        font-size: 2.3rem;
+        margin-bottom: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 8px rgba(44,62,80,0.07);
+    }
+    .welcome-box p {
+        color: #444;
+        font-size: 1.13rem;
+        margin-bottom: 1.7rem;
+    }
+    .welcome-box .welcome-img {
+        margin-top: 1.5rem;
+        filter: drop-shadow(0 6px 18px #74ebd5aa);
+        border-radius: 12px;
+    }
+</style>
+<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:70vh;">
+    <div class="welcome-box">
+        <h1>Hoşgeldiniz, @ViewBag.UserName!</h1>
+        <p>Kütüphane yönetim paneline giriş yaptınız. Sol menüden veya aşağıdaki kısayollardan işlemlerinizi seçebilirsiniz.</p>
+        <img src="https://img.icons8.com/fluency/96/000000/books.png" alt="Kütüphane" class="welcome-img" />
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:1.2rem; justify-content:center; margin-top:2.5rem;">
+        <a href="/Book/Index" class="shortcut-btn"><i class="fa-solid fa-book"></i>Kitaplar</a>
+        <a href="/BookType/Index" class="shortcut-btn"><i class="fa-solid fa-layer-group"></i>Kitap Türleri</a>
+        <a href="/Student/Index" class="shortcut-btn"><i class="fa-solid fa-user-graduate"></i>Öğrenciler</a>
+        <a href="/Class/Index" class="shortcut-btn"><i class="fa-solid fa-chalkboard"></i>Sınıflar</a>
+        <a href="/Loan/Index" class="shortcut-btn"><i class="fa-solid fa-arrow-right-arrow-left"></i>Ödünç İşlemleri</a>
+        <a href="/Report/Index" class="shortcut-btn"><i class="fa-solid fa-chart-bar"></i>Raporlar</a>
+    </div>
+</div>

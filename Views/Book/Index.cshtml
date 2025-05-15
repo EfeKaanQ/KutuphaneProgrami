@@ -1,0 +1,83 @@
+@model IEnumerable<KutuphaneProgrami.Controllers.BookListVM>
+@{
+    ViewBag.Title = "Kitaplar";
+}
+
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:900px; margin:0 auto;">
+    <h2 style="color:#3a6073;"><i class="fas fa-book" style="color:#f39c12; margin-right:0.5rem;"></i>Kitaplar</h2>
+    <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:1rem;">
+        <a href="/Book/Create" style="background:#74ebd5; color:#fff; padding:0.5rem 1rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+            <i class="fas fa-plus" style="margin-right:0.3rem;"></i>Kitap Ekle
+        </a>
+    </div>
+    <table class="modern-table">
+        <tr style="background:#f4f6fb; color:#3a6073;">
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd">Başlık</th>
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd; min-width:220px;">Yazar</th>
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd; min-width:160px;">ISBN</th>
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd; min-width:120px;">Tür</th>
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd">Durum</th>
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd">İşlem</th>
+        </tr>
+        @foreach(var book in Model)
+        {
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <span style="display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>@book.Title
+                    </span>
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <span style="display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <i class="fas fa-user-edit" style="color:#3498db; margin-right:0.5rem;"></i>@book.Author
+                    </span>
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <span style="display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <i class="fas fa-barcode" style="color:#3498db; margin-right:0.5rem;"></i>@book.ISBN
+                    </span>
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <span style="display:flex; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <i class="fas fa-tag" style="color:#3498db; margin-right:0.5rem;"></i>@book.BookTypeName
+                    </span>
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    @if(book.IsAvailable)
+                    {
+                        <span style="display:flex; align-items:center; gap:0.4rem; color:#27ae60; white-space:nowrap;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Mevcut</span>
+                        </span>
+                    }
+                    else
+                    {
+                        <span style="display:flex; align-items:center; gap:0.4rem; color:#e74c3c; white-space:nowrap;">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Ödünçte</span>
+                        </span>
+                    }
+                </td>
+                <td style="padding:0.5rem;border: 1px solid #ddd">
+                    <div style="display:flex; gap:0.5rem; align-items:center;">
+                        @if(book.IsAvailable)
+                        {
+                            <a href="/Loan/Create?bookId=@book.Id" style="background:#3498db; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; white-space:nowrap;">
+                                <i class="fas fa-hand-holding" style="margin-right:0.3rem;"></i>Ödünç Ver
+                            </a>
+                        }
+                        <a href="/Book/Edit/@book.Id" style="background:#f39c12; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+                            <i class="fas fa-edit" style="margin-right:0.3rem;"></i>Güncelle
+                        </a>
+                        <form asp-action="Delete" method="post" style="display:inline; margin:0;">
+                            <input type="hidden" name="id" value="@book.Id" />
+                            <button type="submit" onclick="return confirm('Bu kitabı silmek istediğinize emin misiniz?')" style="background:#e74c3c; color:#fff; padding:0.3rem 0.8rem; border:none; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+                                <i class="fas fa-trash" style="margin-right:0.3rem;"></i>Sil
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div> 

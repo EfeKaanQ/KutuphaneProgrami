@@ -1,0 +1,37 @@
+@model IEnumerable<KutuphaneProgrami.Models.BookType>
+@{
+    ViewBag.Title = "Kitap Türleri";
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:900px; margin:0 auto;">
+    <h2 style="color:#3a6073;"><i class="fas fa-bookmark" style="color:#f39c12; margin-right:0.5rem;"></i>Kitap Türleri</h2>
+    <a href="/BookType/Create" style="background:#74ebd5; color:#fff; padding:0.5rem 1rem; border-radius:6px; text-decoration:none; float:right; margin-bottom:1rem; display:inline-flex; align-items:center;">
+        <i class="fas fa-plus" style="margin-right:0.3rem;"></i>Tür Ekle
+    </a>
+    <table style="width:100%; margin-top:2rem; border-collapse: collapse;">
+        <tr style="background:#f4f6fb; color:#3a6073;">
+            <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd;">Tür Adları</th>
+            <th style="padding:0.5rem; text-align:right; border: 1px solid #ddd;">İşlemler</th>
+        </tr>
+        @foreach(var t in Model)
+        {
+            <tr>
+                <td style="padding:0.5rem; border: 1px solid #ddd;">
+                    <i class="fas fa-tag" style="color:#3498db; margin-right:0.5rem;"></i>@t.Name
+                </td>
+                <td style="padding:0.5rem; border: 1px solid #ddd; text-align:right;">
+                    <div style="display:flex; gap:0.5rem; align-items:center; justify-content:flex-end;">
+                        <a href="/BookType/Edit/@t.Id" style="background:#f39c12; color:#fff; padding:0.3rem 0.8rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+                            <i class="fas fa-edit" style="margin-right:0.3rem;"></i>Güncelle
+                        </a>
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@t.Id" />
+                            <button type="submit" onclick="return confirm('Bu türü silmek istediğinize emin misiniz?')" style="background:#e74c3c; color:#fff; border:none; border-radius:6px; padding:0.3rem 0.8rem; cursor:pointer; display:inline-flex; align-items:center;">
+                                <i class="fas fa-trash" style="margin-right:0.3rem;"></i>Sil
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div> 

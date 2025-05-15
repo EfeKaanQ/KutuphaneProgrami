@@ -1,0 +1,42 @@
+@model KutuphaneProgrami.Models.Loan
+@{
+    ViewBag.Title = "Ödünç İşlemi Güncelle";
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:600px; margin:0 auto;">
+    <h2 style="color:#3a6073;"><i class="fas fa-edit" style="color:#f39c12; margin-right:0.5rem;"></i>Ödünç İşlemi Güncelle</h2>
+    
+    <div style="margin:1rem 0; padding:1rem; background:#f8f9fa; border-radius:8px;">
+        <div style="margin-bottom:0.5rem;">
+            <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>
+            <strong>Kitap:</strong> @Model.Book?.Title
+        </div>
+        <div style="margin-bottom:0.5rem;">
+            <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>
+            <strong>Öğrenci:</strong> @Model.Student?.Name @Model.Student?.Surname
+        </div>
+        <div style="margin-bottom:0.5rem;">
+            <i class="fas fa-calendar-plus" style="color:#3498db; margin-right:0.5rem;"></i>
+            <strong>Alış Tarihi:</strong> @Model.LoanDate.ToString("dd.MM.yyyy")
+        </div>
+    </div>
+
+    <form method="post" action="/Loan/Edit/@Model.Id">
+        <div style="margin-bottom:1rem;">
+            <label style="display:block; margin-bottom:0.5rem; color:#3a6073;">
+                <i class="fas fa-calendar-check" style="color:#3498db; margin-right:0.5rem;"></i>
+                Son İade Tarihi
+            </label>
+            <input type="date" name="DueDate" value="@Model.DueDate.ToString("yyyy-MM-dd")" 
+                   style="width:100%; padding:0.5rem; border:1px solid #ddd; border-radius:6px;" required />
+        </div>
+        
+        <div style="display:flex; gap:1rem; margin-top:2rem;">
+            <button type="submit" style="background:#74ebd5; color:#fff; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center;">
+                <i class="fas fa-save" style="margin-right:0.3rem;"></i>Kaydet
+            </button>
+            <a href="/Loan/Index" style="background:#95a5a6; color:#fff; padding:0.5rem 1rem; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center;">
+                <i class="fas fa-times" style="margin-right:0.3rem;"></i>İptal
+            </a>
+        </div>
+    </form>
+</div> 

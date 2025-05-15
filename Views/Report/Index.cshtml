@@ -1,0 +1,188 @@
+@model dynamic
+@{
+    ViewBag.Title = "Ödünç İşlemleri Raporu";
+    var filterType = ViewBag.FilterType as string[];
+    var mostBorrowed = ViewBag.MostBorrowed as bool?;
+    var mostRead = ViewBag.MostRead as bool?;
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:1000px; margin:0 auto;">
+    <h2 style="color:#3a6073;"><i class="fas fa-chart-bar" style="color:#f39c12; margin-right:0.5rem;"></i>Ödünç İşlemleri Raporu</h2>
+    <button onclick="printTable()" style="background:#3498db; color:#fff; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer; float:right; margin-bottom:1rem; display:inline-flex; align-items:center;">
+        <i class="fas fa-print" style="margin-right:0.3rem;"></i>Yazdır
+    </button>
+    <form method="get" asp-action="Index" style="margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end;">
+        <div>
+            <label for="classId"><i class="fas fa-chalkboard" style="color:#3498db; margin-right:0.3rem;"></i>Sınıf:</label>
+            <select id="classId" name="classId" style="width:150px; padding:0.3rem; border-radius:6px; border:1px solid #b2bec3;">
+                <option value="">Tümü</option>
+                @if (ViewBag.Classes != null)
+                {
+                    foreach (var c in (List<KutuphaneProgrami.Models.Class>)ViewBag.Classes)
+                    {
+                        <option value="@c.Id" selected="@(ViewBag.SelectedClassId == c.Id ? "selected" : null)">@c.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div>
+            <label for="bookId"><i class="fas fa-book" style="color:#3498db; margin-right:0.3rem;"></i>Kitap:</label>
+            <select id="bookId" name="bookId" style="width:150px; padding:0.3rem; border-radius:6px; border:1px solid #b2bec3;">
+                <option value="">Tümü</option>
+                @if (ViewBag.Books != null)
+                {
+                    foreach (var b in (List<KutuphaneProgrami.Models.Book>)ViewBag.Books)
+                    {
+                        <option value="@b.Id" selected="@(ViewBag.SelectedBookId == b.Id ? "selected" : null)">@b.Title</option>
+                    }
+                }
+            </select>
+        </div>
+        <div>
+            <label for="studentName"><i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.3rem;"></i>Öğrenci Adı:</label>
+            <input type="text" id="studentName" name="studentName" value="@ViewBag.StudentName" placeholder="Ad veya Soyad" style="width:150px; padding:0.3rem; border-radius:6px; border:1px solid #b2bec3;" />
+        </div>
+        <div>
+            <label></label>
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <label style="display:flex; align-items:center; gap:0.3rem;">
+                    <input type="checkbox" name="filterType" value="mostBorrowed" @(filterType != null && filterType.Contains("mostBorrowed") ? "checked" : "") />
+                    <i class="fas fa-book-reader" style="color:#3498db;"></i> En Çok Kitap Alan
+                </label>
+                <label style="display:flex; align-items:center; gap:0.3rem;">
+                    <input type="checkbox" name="filterType" value="mostRead" @(filterType != null && filterType.Contains("mostRead") ? "checked" : "") />
+                    <i class="fas fa-book-open" style="color:#3498db;"></i> En Çok Kitap Okuyan
+                </label>
+                <label style="display:flex; align-items:center; gap:0.3rem;">
+                    <input type="checkbox" name="filterType" value="leastReturnDays" @(filterType != null && filterType.Contains("leastReturnDays") ? "checked" : "") />
+                    <i class="fas fa-clock" style="color:#3498db;"></i> İade Günü En Az Kalan
+                </label>
+                <label style="display:flex; align-items:center; gap:0.3rem;">
+                    <input type="checkbox" name="undeliveredOnly" value="true" @(ViewBag.UndeliveredOnly == true ? "checked" : "") />
+                    <i class="fas fa-times-circle" style="color:#e74c3c;"></i> Teslim Edilmeyenler
+                </label>
+            </div>
+        </div>
+        <button type="submit" style="background:#3498db; color:#fff; padding:0.4rem 1.2rem; border:none; border-radius:6px; display:inline-flex; align-items:center;">
+            <i class="fas fa-filter" style="margin-right:0.3rem;"></i>Filtrele
+        </button>
+    </form>
+    @if (mostBorrowed == true || mostRead == true)
+    {
+        var groups = Model as List<KutuphaneProgrami.Controllers.MostBorrowedReportGroupVM>;
+        <div style="margin-top:2rem;">
+            @foreach (var group in groups)
+            {
+                <div style="margin-bottom:2.5rem;">
+                    <div style="font-weight:bold; font-size:1.15rem; color:#3498db; margin-bottom:0.5rem;">
+                        <i class="fas fa-user-graduate" style="margin-right:0.5rem;"></i>
+                        @group.UserName
+                        <span style="color:#888; font-size:1rem; font-weight:normal;">(@group.BookCount kitap)</span>
+                    </div>
+                    <table class="modern-table" style="margin-bottom:0;">
+                        <tr>
+                            <th>Kitap</th>
+                            <th>Alış Tarihi</th>
+                            <th>İade Tarihi</th>
+                            <th>Son İade Tarihi</th>
+                        </tr>
+                        @foreach (var book in group.Books)
+                        {
+                            <tr>
+                                <td>
+                                    <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>@book.BookTitle
+                                </td>
+                                <td>
+                                    <i class="fas fa-calendar-plus" style="color:#3498db; margin-right:0.5rem;"></i>@book.LoanDate.ToString("dd.MM.yyyy")
+                                </td>
+                                <td>
+                                    <i class="fas fa-calendar-times" style="color:#3498db; margin-right:0.5rem;"></i>
+                                    @(book.ReturnDate == null ? "-" : ((DateTime)book.ReturnDate).ToString("dd.MM.yyyy"))
+                                </td>
+                                <td>
+                                    <i class="fas fa-calendar-check" style="color:#3498db; margin-right:0.5rem;"></i>@book.LastReturnDate.ToString("dd.MM.yyyy")
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="print-area">
+            <table style="width:100%; margin-top:2rem; border-collapse: collapse;">
+                <tr style="background:#f4f6fb; color:#3a6073;">
+                    <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd;">Kitap</th>
+                    <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd;">Kullanıcı</th>
+                    <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd;">Alış Tarihi</th>
+                    <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd;">İade Tarihi</th>
+                    <th style="padding:0.5rem; text-align:left; border: 1px solid #ddd;">Son İade Tarihi</th>
+                </tr>
+                @foreach(var r in Model)
+                {
+                    <tr>
+                        <td style="padding:0.5rem; border: 1px solid #ddd;">
+                            <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>@r.BookTitle
+                        </td>
+                        <td style="padding:0.5rem; border: 1px solid #ddd;">
+                            <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>@r.UserName
+                        </td>
+                        <td style="padding:0.5rem; border: 1px solid #ddd;">
+                            <i class="fas fa-calendar-plus" style="color:#3498db; margin-right:0.5rem;"></i>@r.LoanDate.ToString("dd.MM.yyyy")
+                        </td>
+                        <td style="padding:0.5rem; border: 1px solid #ddd;">
+                            <i class="fas fa-calendar-times" style="color:#3498db; margin-right:0.5rem;"></i>
+                            @(r.ReturnDate == null ? "-" : ((DateTime)r.ReturnDate).ToString("dd.MM.yyyy"))
+                        </td>
+                        <td style="padding:0.5rem; border: 1px solid #ddd;">
+                            <i class="fas fa-calendar-check" style="color:#3498db; margin-right:0.5rem;"></i>@r.LastReturnDate.ToString("dd.MM.yyyy")
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>
+
+<script>
+    function printTable() {
+        var printContents = document.querySelector('.print-area').innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+<style>
+    @@media print {
+        body * {
+            visibility: hidden !important;
+        }
+        .print-area, .print-area * {
+            visibility: visible !important;
+        }
+        .print-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        button, h2, [style*="background"]:not(.print-area) {
+            display: none !important;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f6fb !important;
+            color: #3a6073 !important;
+        }
+    }
+</style> 

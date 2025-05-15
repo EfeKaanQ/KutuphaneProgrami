@@ -1,0 +1,84 @@
+@{
+    var userName = Context.Session.GetInt32("UserId") != null ? "Hoşgeldiniz, " + (ViewBag.UserName ?? "Kullanıcı") : "";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/site.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6fb;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            width: 220px;
+            background: linear-gradient(135deg, #74ebd5 0%, #3a6073 100%);
+            color: #fff;
+            padding: 2rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 1.08rem;
+            transition: background 0.2s;
+            display: block;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: rgba(255,255,255,0.18);
+        }
+        .sidebar .logout {
+            margin-top: auto;
+            background: #e74c3c;
+            color: #fff;
+            text-align: center;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 2.5rem 2rem;
+        }
+        .welcome {
+            font-size: 1.2rem;
+            color: #3a6073;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Kütüphane</h2>
+        <a href="/Home/Index">Anasayfa</a>
+        <a href="/Book/Index">Kitaplar</a>
+        <a href="/BookType/Index">Kitap Türleri</a>
+        <a href="/Student/Index">Öğrenciler</a>
+        <a href="/Class/Index">Sınıflar</a>
+        <a href="/Loan/Index">Ödünç İşlemleri</a>
+        <a href="/Report/Index">Raporlar</a>
+        <a class="logout" href="/Account/Logout">Çıkış Yap</a>
+    </div>
+    <div class="main-content">
+        @if (!string.IsNullOrEmpty(userName))
+        {
+            <div class="welcome">@userName</div>
+        }
+        @RenderBody()
+    </div>
+</body>
+</html> 

@@ -1,0 +1,23 @@
+@model KutuphaneProgrami.Models.BookType
+
+@{
+    ViewData["Title"] = "Book Type Sil";
+}
+
+<h2>Book Type Sil</h2>
+
+<h3>Silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>@Model.Name</h4>
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
+        <dt class="col-sm-2">Adı</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+    </dl>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Sil</button>
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </form>
+</div> 

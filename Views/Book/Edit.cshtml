@@ -1,0 +1,36 @@
+@model KutuphaneProgrami.Models.Book
+@{
+    ViewBag.Title = "Kitap Güncelle";
+    var bookTypes = ViewBag.BookTypes as List<KutuphaneProgrami.Models.BookType>;
+}
+<div style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(31,38,135,0.07); padding:2rem; max-width:500px; margin:0 auto;">
+    <h2 style="color:#3a6073;">Kitap Güncelle</h2>
+    @Html.ValidationSummary(true, "", new { @style = "color:#e74c3c; margin-bottom:1rem;" })
+    @if (ViewBag.Errors != null)
+    {
+        <ul style="color:#e74c3c;">
+        @foreach (var err in ViewBag.Errors)
+        {
+            <li>@err</li>
+        }
+        </ul>
+    }
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <label>Başlık:</label>
+        <input asp-for="Title" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <label>Yazar:</label>
+        <input asp-for="Author" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <label>ISBN:</label>
+        <input asp-for="ISBN" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;" required />
+        <label>Tür:</label>
+        <select asp-for="BookTypeId" style="width:100%; padding:0.5rem; margin-bottom:1rem; border-radius:6px; border:1px solid #b2bec3;">
+            <option value="0">Seçiniz</option>
+            @foreach(var t in bookTypes)
+            {
+                <option value="@t.Id">@t.Name</option>
+            }
+        </select>
+        <button type="submit" style="background:#74ebd5; color:#fff; padding:0.5rem 1.2rem; border:none; border-radius:6px; font-size:1rem;">Güncelle</button>
+    </form>
+</div> 
