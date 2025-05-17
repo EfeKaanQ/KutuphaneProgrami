@@ -29,7 +29,7 @@
                     <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>@l.Book?.Title
                 </td>
                 <td style="padding:0.5rem;border: 1px solid #ddd">
-                    <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>@l.Student?.Name @l.Student?.Surname
+                    <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>@(l.Student != null ? l.Student.Name + " " + l.Student.Surname : l.StudentName + " " + l.StudentSurname)
                 </td>
                 <td style="padding:0.5rem;border: 1px solid #ddd">
                     <i class="fas fa-calendar-plus" style="color:#3498db; margin-right:0.5rem;"></i>@l.LoanDate.ToString("dd.MM.yyyy")

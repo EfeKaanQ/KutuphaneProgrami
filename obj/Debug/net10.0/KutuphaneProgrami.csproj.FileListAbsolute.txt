@@ -616,3 +616,4 @@ C:\Users\Efe\Downloads\Kutupphane\Kutupphane\Kutupphane\KutuphaneProgrami\obj\De
 C:\Users\Efe\Downloads\Kutupphane\Kutupphane\Kutupphane\KutuphaneProgrami\obj\Debug\net10.0\KutuphaneProgrami.pdb
 C:\Users\Efe\Downloads\Kutupphane\Kutupphane\Kutupphane\KutuphaneProgrami\obj\Debug\net10.0\KutuphaneProgrami.genruntimeconfig.cache
 C:\Users\Efe\Downloads\Kutupphane\Kutupphane\Kutupphane\KutuphaneProgrami\obj\Debug\net10.0\ref\KutuphaneProgrami.dll
+C:\Users\Efe\Downloads\Kutupphane\Kutupphane\Kutupphane\KutuphaneProgrami\obj\Debug\net10.0\KutuphaneProgrami.sourcelink.json

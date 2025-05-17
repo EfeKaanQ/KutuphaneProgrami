@@ -126,7 +126,7 @@
                             <i class="fas fa-book" style="color:#3498db; margin-right:0.5rem;"></i>@r.BookTitle
                         </td>
                         <td style="padding:0.5rem; border: 1px solid #ddd;">
-                            <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>@r.UserName
+                            <i class="fas fa-user-graduate" style="color:#3498db; margin-right:0.5rem;"></i>@(!string.IsNullOrWhiteSpace(r.UserName) ? r.UserName : (r.StudentName + " " + r.StudentSurname))
                         </td>
                         <td style="padding:0.5rem; border: 1px solid #ddd;">
                             <i class="fas fa-calendar-plus" style="color:#3498db; margin-right:0.5rem;"></i>@r.LoanDate.ToString("dd.MM.yyyy")

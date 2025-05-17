@@ -28,7 +28,7 @@ namespace KutuphaneProgrami
                 .HasMany(s => s.Loans)
                 .WithOne(l => l.Student)
                 .HasForeignKey(l => l.StudentId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Books)
